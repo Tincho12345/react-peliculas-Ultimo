@@ -21,7 +21,7 @@ export default function FormularioGeneros(props: formularioGenerosProps){
                     type="submit">Salvar</Button>
                     <Link className="btn btn-secondary" to={"/generos"}>Cancelar</Link>
                 </Form>
-              )}
+            )}
         </Formik>
     )
 }
@@ -29,5 +29,4 @@ export default function FormularioGeneros(props: formularioGenerosProps){
 interface formularioGenerosProps{
     modelo: generoCreacionDTO;
     onSubmit(valores: generoCreacionDTO, accion: FormikHelpers<generoCreacionDTO>): void;
-
 }

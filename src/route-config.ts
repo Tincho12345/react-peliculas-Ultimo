@@ -23,7 +23,7 @@ const rutas = [
     {path:'/generos/editar/:id(\\d+)', componente: EditarGenero},
     {path:'/generos', componente: IndiceGeneros, exact: true},
 
-    {path:'/actores/crear/:id(\\d+)', componente: CrearActores},
+    {path:'/actores/crear/', componente: CrearActores},
     {path:'/actores/editar/:id(\\d+)', componente: EditarActores},
     {path:'/actores', componente: IndiceActores, exact: true},
 
