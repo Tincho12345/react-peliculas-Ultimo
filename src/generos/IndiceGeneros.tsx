@@ -25,7 +25,6 @@ export default function IndiceGeneros(){
             setTotalDePaginas(Math.ceil(totalDeRegistros/recordsPorPagina))
             console.log(respuesta.data);
             setGeneros(respuesta.data);
-
         })
     },[pagina, recordsPorPagina])
 
