@@ -1,7 +1,6 @@
 import { Field, useFormikContext } from "formik";
 import ReactMarkdown from "react-markdown";
-import './FormGroupMarkdown.css';
-
+import './FormMarkdown.css';
 
 export default function FormGroupMarkdown(props: formGroupMarkdownProps){
     const {values} = useFormikContext<any>();

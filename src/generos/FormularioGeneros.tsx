@@ -11,7 +11,9 @@ export default function FormularioGeneros(props: formularioGenerosProps){
         onSubmit={props.onSubmit}
         
         validationSchema={Yup.object({
-            nombre: Yup.string().required('Este Campo es Obligatorio').primeraLetraMayuscula()
+            nombre: Yup.string().required('Este Campo es Obligatorio')
+            .max(50, 'La longitud máxima es de 50 Caracteres')
+            .primeraLetraMayuscula()
         })}
         >      
             {(formikProps) => (
