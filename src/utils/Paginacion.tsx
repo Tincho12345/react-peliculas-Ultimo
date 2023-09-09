@@ -56,7 +56,6 @@ export default function Paginacion(props: paginacionProps){
         if (!link.habilitado) {
             return;
         }
-
         props.onChange(link.pagina);
     }
 
@@ -88,6 +87,7 @@ interface paginacionProps{
     radio: number;
     onChange(pagina: number): void;
 }
+
 Paginacion.defaultProps = {
-    radio: 3
+    radio: 2
 }
