@@ -6,27 +6,45 @@ import { urlGeneros } from "../utils/endpoints";
 import ListadoGenerico from "utils/ListadoGenerico";
 import Button from "utils/Button";
 import Paginacion from "utils/Paginacion";
+import confirmar from "utils/Confirmar";
+
 
 export default function IndiceGeneros(){
     // Estado para recibir un Array de Generos
     const [generos, setGeneros] = useState<generoDTO[]>();
     const [totalDePaginas, setTotalDePaginas] = useState(10);
-    const [recordsPorPagina, setRecordsPorPagina] = useState(1);
+    const [recordsPorPagina, setRecordsPorPagina] = useState(5);
     const [pagina, setPagina] = useState(1);
 
     useEffect(()=>{
+        cargarDatos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[pagina, recordsPorPagina])
+
+    function cargarDatos(){
         axios.get(urlGeneros, {
             params: {pagina, recordsPorPagina}
         })
 
         .then((respuesta: AxiosResponse<generoDTO[]>) => {
+            setGeneros(respuesta.data);
+
             const totalDeRegistros = 
                 parseInt(respuesta.headers['cantidadtotalregistros'], 10);
             setTotalDePaginas(Math.ceil(totalDeRegistros/recordsPorPagina))
-            console.log(respuesta.data);
-            setGeneros(respuesta.data);
+
         })
-    },[pagina, recordsPorPagina])
+    }
+
+    async function borrar(id: number){
+        try {
+            await axios.delete(`${urlGeneros}/${id}`)
+            cargarDatos();
+        } catch (error) {
+            console.log(error.response.data);
+        }
+        
+    }
     return(
         <>
             <h3>Géneros</h3>
@@ -36,7 +54,7 @@ export default function IndiceGeneros(){
                 <label>Registros por Página:</label>
                 <select 
                     className="form-control"
-                    defaultValue={10}
+                    defaultValue={recordsPorPagina}
                     onChange={e => {
                         setPagina(1);
                         setRecordsPorPagina(parseInt(e.currentTarget.value,10))
@@ -51,7 +69,6 @@ export default function IndiceGeneros(){
             paginaActual={pagina} onChange={nuevaPagina => setPagina(nuevaPagina)} />
            
             <ListadoGenerico listado={generos}>
-                {/* Creamos la Tabla */}
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -63,10 +80,12 @@ export default function IndiceGeneros(){
                         {generos?.map(genero => 
                         <tr key={genero.id}>
                             <td>
-                                <Link className="btn btn-success" to={`/generos/${genero.id}`}>
+                                <Link className="btn btn-success" to={`/generos/editar/${genero.id}`}>
                                 Editar ✍️ 
                                 </Link>
-                                <Button className="btn btn-danger">Borrar 🗑️</Button>
+                                <Button
+                                onclick={() => confirmar(() => borrar(genero.id))}
+                                className="btn btn-danger">Borrar 🗑️</Button>
                             </td>
                             <td>
                                 {genero.nombre}
