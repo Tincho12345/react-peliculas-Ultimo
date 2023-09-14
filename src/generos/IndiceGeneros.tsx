@@ -42,8 +42,7 @@ export default function IndiceGeneros(){
             cargarDatos();
         } catch (error) {
             console.log(error.response.data);
-        }
-        
+        }       
     }
     return(
         <>
